@@ -223,15 +223,24 @@ class outputPort(threading.Thread):
       time.sleep(0.1)
 
 if __name__ == "__main__":
-  queue = Queue()  
-  inputPort(queue)
-  outputPort(queue)
+  try: 
+    queue = Queue()  
+    inputPort(queue)
+    outputPort(queue)
 #  rsSerial()
-  while 1:
-      buz = GPIO.PWM(27, 1000)
+    buz = GPIO.PWM(27,1000)
+
+    while 1:
       buz.start(50)
-      time.sleep(1)
+      time.sleep(.5)
       buz.stop()
+      time.sleep(.5)
+       
+  except KeyboardInterrupt:
+    GPIO.cleanup()
+    buz.stop()
+ 
+
 
 #   parser = argparse.ArgumentParser()
 #   parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
@@ -264,3 +273,4 @@ if __name__ == "__main__":
 #       colorWipe(strip, Color(0,0,0), 10)
 
 
+#    pass
